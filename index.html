@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HanLingua - Hệ sinh thái học tiếng Hàn toàn diện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hanred: {
+                            50: '#ffebee',
+                            100: '#ffcdd2',
+                            500: '#f44336',
+                            600: '#e53935',
+                            700: '#d32f2f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(90deg, #d32f2f, #ff7043);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Hiệu ứng nhịp đập cho Mic */
+        .pulse-mic { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center cursor-pointer" onclick="switchView('view-landing')">
+                    <i class="fa-solid fa-language text-hanred-600 text-3xl mr-2"></i>
+                    <span class="font-extrabold text-2xl text-gray-900 tracking-tight">Han<span class="text-hanred-600">Lingua</span></span>
+                </div>
+                <nav id="main-nav" class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-900 font-semibold border-b-2 border-hanred-600 pb-1" onclick="switchView('view-landing')">Trang chủ</a>
+                    <a href="#features" class="text-gray-500 hover:text-hanred-600 font-medium transition" onclick="switchView('view-landing')">Tính năng</a>
+                    <a href="#workflow" class="text-gray-500 hover:text-hanred-600 font-medium transition" onclick="switchView('view-landing')">Cách học</a>
+                    <a href="#" class="text-gray-500 hover:text-hanred-600 font-medium transition">Bảng giá</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hidden md:block text-gray-600 font-medium hover:text-hanred-600 transition">Đăng nhập</a>
+                    <a href="#" class="bg-hanred-600 hover:bg-hanred-700 text-white px-5 py-2 rounded-lg font-medium transition shadow-md">Bắt đầu ngay</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="view-landing" class="block">
+        <section class="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-block bg-red-100 text-hanred-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-6">
+                        🚀 Nền tảng học tiếng Hàn AI thế hệ mới
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+                        Làm chủ tiếng Hàn qua <br>
+                        <span class="gradient-text">Nghe chép & Giao tiếp</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        HanLingua mang đến hệ sinh thái học tập toàn diện. Tự do học với tài liệu của riêng bạn, luyện nói cùng AI và theo dõi tiến độ chuẩn bị cho kỳ thi TOPIK.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#" class="bg-hanred-600 hover:bg-hanred-700 text-white px-8 py-3 rounded-lg font-bold text-lg text-center transition shadow-lg flex justify-center items-center">
+                            Tạo tài khoản miễn phí <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#features" class="bg-white border border-gray-300 hover:border-hanred-600 hover:text-hanred-600 text-gray-700 px-8 py-3 rounded-lg font-bold text-lg text-center transition">
+                            Xem tính năng
+                        </a>
+                    </div>
+                </div>
+                <div class="relative hidden md:block">
+                    <div class="absolute inset-0 bg-hanred-100 rounded-full blur-3xl opacity-50"></div>
+                    <div class="relative bg-white border border-gray-200 rounded-2xl shadow-2xl p-6">
+                        <div class="flex items-center justify-between mb-4 border-b pb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-hanred-100 rounded-full flex items-center justify-center text-hanred-600"><i class="fa-solid fa-headphones"></i></div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Bản tin KBS Hôm nay</h3>
+                                    <p class="text-xs text-gray-500">Tiến độ: 45% • Trung cấp</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-bold">Dictation</span>
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-lg text-gray-700 font-medium leading-relaxed">
+                                <span class="inline-block border-b-2 border-hanred-600 w-16 bg-red-50 text-center text-hanred-600"></span><span class="inline-block border-b-2 border-gray-300 w-16 bg-gray-50"></span>
+                            </p>
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 mt-4">
+                                <button class="text-hanred-600"><i class="fa-solid fa-play-circle text-2xl"></i></button>
+                                <div class="h-1.5 bg-gray-200 flex-1 rounded-full overflow-hidden">
+                                    <div class="h-full bg-hanred-600 w-1/3"></div>
+                                </div>
+                                <span>0:15 / 1:30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Vũ khí bí mật của HanLingua</h2>
+                    <p class="mt-4 text-gray-600">Hai công cụ đột phá giúp bạn bứt phá kỹ năng Nghe - Nói nhanh nhất. (Click để dùng thử)</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div onclick="switchView('view-dictation')" class="cursor-pointer group bg-gradient-to-br from-red-50 to-white border border-red-100 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 bg-white shadow-sm border border-red-100 text-hanred-600 rounded-xl flex items-center justify-center text-2xl group-hover:bg-hanred-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-file-audio"></i>
+                            </div>
+                            <span class="bg-hanred-600 text-white text-xs font-bold px-3 py-1 rounded-full">Phổ biến nhất</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-hanred-600 transition">Custom Dictation</h3>
+                        <p class="text-gray-600 mb-6 line-clamp-3">
+                            Hệ thống tự động tạo bài tập chép chính tả từ <b>bất kỳ tài liệu nào bạn tải lên</b> (Video YouTube, file MP3, Podcast). HanLingua AI sẽ bóc tách phụ đề và tạo chỗ trống thông minh theo trình độ của bạn.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 font-medium mb-4">
+                            <li><i class="fa-solid fa-check text-hanred-500 mr-2"></i> Không giới hạn nguồn tài liệu học.</li>
+                            <li><i class="fa-solid fa-check text-hanred-500 mr-2"></i> Tự động phân tích từ vựng khó trong bài.</li>
+                        </ul>
+                        <div class="text-hanred-600 font-bold flex items-center group-hover:translate-x-2 transition">
+                            Vào không gian học <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+
+                    <div onclick="switchView('view-speaking')" class="cursor-pointer group bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 bg-white shadow-sm border border-gray-200 text-hanred-600 rounded-xl flex items-center justify-center text-2xl group-hover:bg-gray-800 group-hover:text-white transition">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <span class="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full">Công nghệ AI</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-hanred-600 transition">AI Speaking Partner</h3>
+                        <p class="text-gray-600 mb-6 line-clamp-3">
+                            Luyện phản xạ giao tiếp 1-1 với trợ lý ảo bằng giọng nói tự nhiên. Chấm điểm phát âm chuẩn xác từng âm tiết và gợi ý cách diễn đạt tự nhiên như người bản xứ.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 font-medium mb-4">
+                            <li><i class="fa-solid fa-check text-hanred-500 mr-2"></i> Đóng vai theo 50+ tình huống thực tế.</li>
+                            <li><i class="fa-solid fa-check text-hanred-500 mr-2"></i> Nhận xét chi tiết lỗi phát âm.</li>
+                        </ul>
+                        <div class="text-hanred-600 font-bold flex items-center group-hover:translate-x-2 transition">
+                            Vào phòng luyện nói <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-gray-50 border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-10">
+                    <h2 class="text-2xl font-bold text-gray-900">Các công cụ hỗ trợ đắc lực</h2>
+                    <p class="text-gray-600 mt-2">Mọi thứ được thiết kế tinh gọn để quá trình luyện Nghe - Nói của bạn tối ưu nhất.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 hover:border-hanred-300 transition shadow-sm">
+                        <i class="fa-solid fa-layer-group text-hanred-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-gray-900 mb-2">Smart Flashcards</h4>
+                        <p class="text-sm text-gray-600">Lưu lại ngay từ mới từ bài Dictation và ôn tập lại theo thuật toán lặp lại ngắt quãng.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 hover:border-hanred-300 transition shadow-sm">
+                        <i class="fa-solid fa-circle-play text-hanred-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-gray-900 mb-2">Trình phát thông minh</h4>
+                        <p class="text-sm text-gray-600">Tùy chỉnh tốc độ phát (0.5x - 1.5x) và lặp lại đoạn A-B vô hạn giúp nghe rõ từng âm tiết bị lướt.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 hover:border-hanred-300 transition shadow-sm">
+                        <i class="fa-solid fa-book text-hanred-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-gray-900 mb-2">Từ điển tích hợp</h4>
+                        <p class="text-sm text-gray-600">Tra cứu nhanh nghĩa và cách phát âm ngay trong màn hình làm bài chép chính tả chỉ với một cú click.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 hover:border-hanred-300 transition shadow-sm">
+                        <i class="fa-solid fa-chart-simple text-hanred-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-gray-900 mb-2">Quản lý tiến độ</h4>
+                        <p class="text-sm text-gray-600">Lưu trữ gọn gàng các tài liệu đã tải lên, thống kê số bài đã hoàn thành để bạn luôn giữ được động lực.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-12">Chỉ mất 3 bước để bắt đầu bài học của riêng bạn</h2>
+                <div class="grid md:grid-cols-3 gap-8 relative">
+                    <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-gray-200 -z-10"></div>
+                    <div class="bg-white">
+                        <div class="w-20 h-20 mx-auto bg-gray-50 border-2 border-hanred-600 text-hanred-600 rounded-full flex items-center justify-center text-2xl font-bold mb-4 z-10 relative">1</div>
+                        <h4 class="text-xl font-bold mb-2">Tải lên tài liệu</h4>
+                        <p class="text-gray-600 text-sm px-4">Dán link YouTube hoặc tải file mp3/mp4 bài hát, vlog mà bạn yêu thích.</p>
+                    </div>
+                    <div class="bg-white">
+                        <div class="w-20 h-20 mx-auto bg-gray-50 border-2 border-hanred-600 text-hanred-600 rounded-full flex items-center justify-center text-2xl font-bold mb-4 z-10 relative">2</div>
+                        <h4 class="text-xl font-bold mb-2">AI Xử lý tự động</h4>
+                        <p class="text-gray-600 text-sm px-4">Hệ thống bóc băng (transcript), dịch thuật và tạo các ô trống chính tả phù hợp với trình độ của bạn.</p>
+                    </div>
+                    <div class="bg-white">
+                        <div class="w-20 h-20 mx-auto bg-gray-50 border-2 border-hanred-600 text-hanred-600 rounded-full flex items-center justify-center text-2xl font-bold mb-4 z-10 relative">3</div>
+                        <h4 class="text-xl font-bold mb-2">Học & Cải thiện</h4>
+                        <p class="text-gray-600 text-sm px-4">Thực hành nghe chép, sau đó dùng AI Speaking để đọc lại và sửa lỗi phát âm.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0 flex items-center">
+                        <i class="fa-solid fa-language text-hanred-500 text-3xl mr-2"></i>
+                        <span class="font-extrabold text-2xl tracking-tight">Han<span class="text-hanred-500">Lingua</span></span>
+                    </div>
+                    <div class="flex space-x-6 text-gray-400">
+                        <a href="#" class="hover:text-white transition">Về chúng tôi</a>
+                        <a href="#" class="hover:text-white transition">Điều khoản</a>
+                        <a href="#" class="hover:text-white transition">Bảo mật</a>
+                        <a href="#" class="hover:text-white transition">Hỗ trợ</a>
+                    </div>
+                </div>
+                <div class="mt-8 text-center text-gray-600 text-sm">
+                    &copy; 2026 HanLingua. Xây dựng cho những người yêu tiếng Hàn.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="view-dictation" class="hidden min-h-screen py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <button onclick="switchView('view-landing')" class="mb-6 text-gray-500 hover:text-hanred-600 flex items-center font-medium bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 w-max">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Trở lại
+            </button>
+            
+            <div class="flex space-x-4 mb-6">
+                <button onclick="switchDictationTab('default')" id="btn-tab-default" class="px-6 py-2 bg-hanred-600 text-white font-bold rounded-lg shadow transition">Bài học mặc định</button>
+                <button onclick="switchDictationTab('ai')" id="btn-tab-ai" class="px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border border-gray-200 hover:bg-gray-50 transition">AI Dictation</button>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-max">
+                    <div id="panel-default-control" class="block">
+                        <h3 class="font-bold text-lg mb-4 text-gray-900">Bài học hệ thống</h3>
+                        <p id="default-status" class="text-sm text-green-600 font-medium bg-green-50 p-3 rounded-lg border border-green-200 mb-4">Đang tải dữ liệu...</p>
+                        <button onclick="loadDefaultData()" class="w-full bg-gray-100 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200">Tải lại bài mặc định</button>
+                    </div>
+
+                    <div id="panel-ai-control" class="hidden">
+                        <h3 class="font-bold text-lg mb-4 text-gray-900">1. Tải tài liệu của bạn</h3>
+                        <p class="text-sm text-gray-500 mb-4">Hỗ trợ file Audio/Video. AI Whisper sẽ bóc tách kịch bản tự động.</p>
+                        <input type="file" id="ai-file-input" accept="audio/*,video/*" class="mb-4 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-hanred-700 hover:file:bg-red-100 cursor-pointer"/>
+                        <p id="ai-status" class="text-sm text-gray-500 mb-4"></p>
+                        <button onclick="processAIFile()" id="btn-process-ai" class="w-full bg-hanred-600 hover:bg-hanred-700 text-white px-4 py-3 rounded-lg text-sm font-bold shadow-md transition">
+                            Phân tích Script qua AI
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-200 flex flex-col">
+                    <h3 class="font-bold text-xl text-gray-900 mb-6">2. Khu vực chép chính tả</h3>
+
+                    <div id="audio-container" class="mb-6">
+                        <audio controls style="width: 100%; border-radius: 8px; outline: none;" src="audio.mp3"></audio>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Gõ nội dung nghe được:</label>
+                        <textarea id="user-input-text" rows="6" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-hanred-500 resize-y text-base transition" placeholder="Nhập vào đây..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button onclick="submitEval()" class="bg-gray-900 hover:bg-black text-white px-8 py-2.5 rounded-lg font-medium transition shadow-md">Chấm điểm bài làm</button>
+                    </div>
+
+                    <div id="feedback-container" class="mt-8 hidden">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-speaking" class="hidden min-h-screen py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <button onclick="switchView('view-landing')" class="mb-6 text-gray-500 hover:text-hanred-600 flex items-center font-medium bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 w-max">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Trở lại
+            </button>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-max">
+                    <h3 class="font-bold text-lg mb-2 text-gray-900">1. Cung cấp ngữ cảnh</h3>
+                    <p class="text-sm text-gray-500 mb-6">Tải lên file văn bản hoặc nhập kịch bản để AI dựa vào đó giao tiếp với bạn (Tùy chọn).</p>
+                    
+                    <textarea class="w-full h-32 p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-hanred-500 resize-none text-sm mb-4 transition" placeholder="Ví dụ: Đóng vai nhân viên quán cafe ở Seoul, hãy hỏi tôi muốn gọi món gì..."></textarea>
+                    
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-hanred-500 hover:bg-red-50 transition cursor-pointer bg-white group">
+                        <i class="fa-solid fa-file-lines text-2xl text-gray-400 mb-2 group-hover:text-hanred-500 transition"></i>
+                        <p class="text-sm text-gray-600 font-medium">Kéo thả file PDF/DOCX</p>
+                    </div>
+                    
+                    <button class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-lg transition text-sm">
+                        Lưu ngữ cảnh & Bắt đầu
+                    </button>
+                </div>
+
+                <div class="lg:col-span-2 bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[500px]">
+                    
+                    <div class="absolute top-8 right-8 flex items-center space-x-2 bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-200">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span>AI Đang sẵn sàng</span>
+                    </div>
+
+                    <div class="flex space-x-1.5 opacity-60 mb-8 mt-4">
+                        <div class="w-2 h-6 bg-hanred-300 rounded-full animate-pulse"></div>
+                        <div class="w-2 h-10 bg-hanred-400 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
+                        <div class="w-2 h-16 bg-hanred-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-8 bg-hanred-400 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+                        <div class="w-2 h-4 bg-hanred-300 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                    </div>
+
+                    <h3 class="font-extrabold text-3xl text-gray-900 mb-3">Xin chào! Tôi là HanLinguaAI.</h3>
+                    <p class="text-gray-500 mb-12 max-w-md text-lg">Nhấn vào biểu tượng Micro bên dưới để bắt đầu nói. Tôi sẽ lắng nghe và phản hồi lại bạn bằng tiếng Hàn.</p>
+                    
+                    <button class="pulse-mic w-28 h-28 bg-hanred-600 rounded-full flex items-center justify-center text-white text-4xl hover:bg-hanred-700 transition shadow-xl relative z-10 cursor-pointer">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    
+                    <p class="mt-10 text-sm font-bold text-gray-400">Đang chờ bạn nhấn...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Tạo bộ nhớ độc lập (Đã gỡ biến lưu trữ audio mặc định thừa)
+        let tabState = {
+            default: { transcript: "" },
+            ai: { transcript: "", audioB64: "", statusHtml: "" }
+        };
+        let currentTargetTranscript = ""; 
+
+        // Chuyển đổi màn hình chính
+        function switchView(viewId) {
+            const views = ['view-landing', 'view-dictation', 'view-speaking'];
+            views.forEach(id => {
+                document.getElementById(id).classList.toggle('hidden', id !== viewId);
+                document.getElementById(id).classList.toggle('block', id === viewId);
+            });
+            const navMenu = document.getElementById('main-nav');
+            if (viewId === 'view-landing') {
+                navMenu.classList.replace('md:hidden', 'md:flex');
+            } else {
+                navMenu.classList.replace('md:flex', 'md:hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (viewId === 'view-dictation' && tabState.default.transcript === "") {
+                loadDefaultData();
+            }
+        }
+
+        // Chuyển qua lại giữa 2 Tab
+        function switchDictationTab(tab) {
+            const isDefault = tab === 'default';
+            
+            document.getElementById('btn-tab-default').className = isDefault ? "px-6 py-2 bg-hanred-600 text-white font-bold rounded-lg shadow transition" : "px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border border-gray-200 hover:bg-gray-50 transition";
+            document.getElementById('btn-tab-ai').className = !isDefault ? "px-6 py-2 bg-hanred-600 text-white font-bold rounded-lg shadow transition" : "px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border border-gray-200 hover:bg-gray-50 transition";
+            
+            document.getElementById('panel-default-control').classList.toggle('hidden', !isDefault);
+            document.getElementById('panel-default-control').classList.toggle('block', isDefault);
+            document.getElementById('panel-ai-control').classList.toggle('hidden', isDefault);
+            document.getElementById('panel-ai-control').classList.toggle('block', !isDefault);
+
+            document.getElementById('user-input-text').value = "";
+            document.getElementById('feedback-container').classList.add('hidden');
+
+            if (isDefault) {
+                currentTargetTranscript = tabState.default.transcript;
+                // Ném cứng file mp3 vào thẻ HTML luôn mỗi khi về tab này
+                document.getElementById('audio-container').innerHTML = `<audio controls style="width: 100%; border-radius: 8px; outline: none;" src="audio.mp3"></audio>`;
+                if (tabState.default.transcript === "") loadDefaultData();
+            } else {
+                currentTargetTranscript = tabState.ai.transcript;
+                if (tabState.ai.statusHtml) document.getElementById('ai-status').innerHTML = tabState.ai.statusHtml;
+                if (tabState.ai.audioB64) {
+                    setAudioPlayer(tabState.ai.audioB64);
+                } else {
+                    document.getElementById('audio-container').innerHTML = "<p class='text-gray-500 text-sm'>Hãy tải lên tài liệu để AI phân tích.</p>";
+                }
+            }
+        }
+
+        async function loadDefaultData() {
+            try {
+                const res = await fetch('/api/default-data');
+                const data = await res.json();
+                
+                // Chỉ lấy phần script thôi
+                tabState.default.transcript = data.transcript;
+                document.getElementById('default-status').innerText = data.status;
+
+                if (document.getElementById('panel-default-control').classList.contains('block')) {
+                    currentTargetTranscript = tabState.default.transcript;
+                    // Ném cứng file mp3
+                    document.getElementById('audio-container').innerHTML = `<audio controls style="width: 100%; border-radius: 8px; outline: none;" src="audio.mp3"></audio>`;
+                }
+            } catch (err) {
+                console.error("Lỗi tải mặc định:", err);
+            }
+        }
+
+        async function processAIFile() {
+            const fileInput = document.getElementById('ai-file-input');
+            if (!fileInput.files.length) {
+                alert("Vui lòng chọn file trước!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            const btn = document.getElementById('btn-process-ai');
+            const statusLabel = document.getElementById('ai-status');
+            
+            btn.innerText = "Đang xử lý (Vui lòng đợi)...";
+            btn.disabled = true;
+            statusLabel.innerText = "AI đang nghe và tạo script...";
+
+            try {
+                const res = await fetch('/api/process-ai', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                
+                tabState.ai.transcript = data.transcript;
+                tabState.ai.audioB64 = data.audio_b64;
+                tabState.ai.statusHtml = `<span class="text-green-600 font-bold">${data.status}</span>`;
+                
+                statusLabel.innerHTML = tabState.ai.statusHtml;
+                currentTargetTranscript = tabState.ai.transcript;
+                if (tabState.ai.audioB64) {
+                    setAudioPlayer(tabState.ai.audioB64);
+                }
+            } catch (err) {
+                statusLabel.innerHTML = `<span class="text-red-600">Lỗi trong quá trình xử lý!</span>`;
+            } finally {
+                btn.innerText = "Phân tích Script qua AI";
+                btn.disabled = false;
+            }
+        }
+
+        async function submitEval() {
+            const userText = document.getElementById('user-input-text').value.trim();
+            if (!currentTargetTranscript) {
+                alert("Chưa có dữ liệu bài tập (Script gốc) để chấm!");
+                return;
+            }
+            if (!userText) {
+                alert("Vui lòng nhập nội dung trước khi chấm!");
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/evaluate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        target_text: currentTargetTranscript,
+                        user_text: userText
+                    })
+                });
+                const result = await res.json();
+                
+                if (result.error) {
+                    alert(result.error);
+                    return;
+                }
+                
+                renderFeedback(result);
+            } catch (err) {
+                console.error("Lỗi chấm điểm:", err);
+            }
+        }
+
+        function renderFeedback(data) {
+            const container = document.getElementById('feedback-container');
+            container.classList.remove('hidden');
+            
+            let html = `<h3 class="mb-4 text-xl font-bold">Điểm: <span class="text-hanred-600">${data.score_percent}%</span></h3>`;
+            html += `<div style="font-size:20px; line-height:2.2; background:#f9fafb; padding:20px; border-radius:8px; border:1px solid #ddd;">`;
+            
+            data.feedback.forEach(item => {
+                if (item.status === "correct") {
+                    html += `<span style="color: #10b981; font-weight: 500; margin-right: 8px;">${item.word}</span>`;
+                } else if (item.status === "wrong_user") {
+                    html += `<span style="color: #ef4444; font-weight: 500; text-decoration: line-through; margin-right: 4px;">${item.word}</span>`;
+                } else if (item.status === "missing") {
+                    html += `<span style="color: #ef4444; font-weight: 500; margin-right: 8px;">${item.word}</span>`;
+                } else if (item.status === "hint") {
+                    html += `<span style="color: #facc15; font-weight: 600; margin-right: 8px;">${item.word}</span>`;
+                }
+            });
+            
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function setAudioPlayer(b64) {
+            const container = document.getElementById('audio-container');
+            container.innerHTML = `<audio controls style="width: 100%; border-radius: 8px; outline: none;"><source src="data:audio/mp3;base64,${b64}" type="audio/mp3"></audio>`;
+        }
+    </script>
+</body>
+</html>
