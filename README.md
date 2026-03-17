@@ -5,7 +5,7 @@
 Install the required Python libraries:
 
 ```bash
-pip install fastapi uvicorn python-multipart transformers torch torchaudio librosa
+pip install fastapi uvicorn python-multipart transformers torch torchaudio librosa yt-dlp
 ```
 
 Additionally, make sure **FFmpeg** is installed on your system.
