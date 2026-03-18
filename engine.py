@@ -24,7 +24,7 @@ pipe = pipeline(
 )
 
 def generate_transcript_json(file_path):
-    result = pipe(file_path, return_timestamps=True)
+    result = pipe(file_path, return_timestamps=True, generate_kwargs={"language": "korean"})
     text = result["text"].strip()
 
     sentences = re.split(r'(?<=[.!?])\s+', text)

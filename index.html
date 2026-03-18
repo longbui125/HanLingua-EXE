@@ -769,17 +769,17 @@
             container.classList.remove('hidden');
             
             let html = `<h3 class="mb-4 text-xl font-bold italic">Kết quả bài làm: <span class="text-hanred-600 underline">${data.score_percent}%</span></h3>`;
-            html += `<div style="font-size:18px; line-height:2.4; background:#f9fafb; padding:24px; border-radius:12px; border:1px solid #e2e8f0; font-weight:500;">`;
+            html += `<div style="font-size:18px; line-height:2.4; background:#f9fafb; padding:24px; border-radius:12px; border:1px solid #e2e8f0; font-weight:500; word-break: break-word;">`;
             
             data.feedback.forEach(item => {
                 if (item.status === "correct") {
-                    html += `<span style="color: #10b981; margin-right: 8px;">${item.word}</span>`;
+                    html += `<span style="color: #10b981; margin-right: 8px;">${item.word}</span> `;
                 } else if (item.status === "wrong_user") {
-                    html += `<span style="color: #ef4444; text-decoration: line-through; margin-right: 4px;">${item.word}</span>`;
+                    html += `<span style="color: #ef4444; text-decoration: line-through; margin-right: 4px;">${item.word}</span> `;
                 } else if (item.status === "missing") {
-                    html += `<span style="color: #ef4444; border-bottom: 2px solid #ef4444; margin-right: 8px;">${item.word}</span>`;
+                    html += `<span style="color: #ef4444; border-bottom: 2px solid #ef4444; margin-right: 8px;">${item.word}</span> `;
                 } else if (item.status === "hint") {
-                    html += `<span style="color: #facc15; font-weight: 700; margin-right: 8px;">${item.word}</span>`;
+                    html += `<span style="color: #facc15; font-weight: 700; margin-right: 8px;">${item.word}</span> `;
                 }
             });
             
