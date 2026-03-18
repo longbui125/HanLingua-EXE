@@ -37,6 +37,22 @@
             70% { box-shadow: 0 0 0 20px rgba(229, 57, 53, 0); }
             100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
         }
+        /* CSS cho ô điền từ rải rác */
+        .cloze-input {
+            border-bottom: 2px dashed #94a3b8;
+            background: transparent;
+            outline: none;
+            text-align: center;
+            color: #e53935;
+            font-weight: 700;
+            padding: 0 4px;
+        }
+        .cloze-input:focus {
+            border-bottom: 2px solid #e53935;
+        }
+        /* Hỗ trợ ẩn hiện mượt mà một chút */
+        .level-content { display: none; }
+        .level-content.active { display: block; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
@@ -256,28 +272,54 @@
             <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-max">
                     <div id="panel-default-control" class="block">
-                        <h3 class="font-bold text-lg mb-4 text-gray-900">Bài học hệ thống</h3>
-                        <div class="space-y-4">
-                            <button id="btn-level-1" onclick="loadDefaultData(1)" class="w-full bg-green-50 border border-green-200 text-green-800 p-2 rounded-xl text-sm md:text-base font-bold hover:bg-green-100 transition flex justify-between items-center text-left">
-                                <div class="flex items-center space-x-3 md:space-x-4">
-                                    <img src="img_1.jpg" alt="" class="w-12 h-12 md:w-14 md:h-14 object-cover rounded-lg border border-green-200 shadow-sm bg-white">
-                                    <span>Bài 1: Bài tập điền từ (Sở thích)</span>
-                                </div>
-                                <i class="fa-solid fa-play mr-2 text-green-700"></i>
+                        <h3 class="font-bold text-lg mb-4 text-gray-900 border-b pb-2">Danh sách bài học</h3>
+                        
+                        <div class="mb-2">
+                            <button onclick="toggleLevel('content-so-cap')" class="w-full flex justify-between items-center py-2 text-hanred-600 font-bold text-sm italic hover:bg-red-50 rounded px-2 transition">
+                                <span><i class="fa-solid fa-graduation-cap mr-2"></i> TRÌNH ĐỘ SƠ CẤP</span>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
                             </button>
-                            <button id="btn-level-2" onclick="loadDefaultData(2)" class="w-full bg-blue-50 border border-blue-200 text-blue-800 p-2 rounded-xl text-sm md:text-base font-bold hover:bg-blue-100 transition flex justify-between items-center text-left">
-                                <div class="flex items-center space-x-3 md:space-x-4">
-                                    <img src="img_2.jpg" alt="" class="w-12 h-12 md:w-14 md:h-14 object-cover rounded-lg border border-blue-200 shadow-sm bg-white">
-                                    <span>Bài 2: Bài nghe chép (Thời tiết)</span>
-                                </div>
-                                <i class="fa-solid fa-play mr-2 text-blue-700"></i>
+                            <div id="content-so-cap" class="level-content active space-y-4 mt-3">
+                                <button id="btn-level-1" onclick="loadDefaultData(1)" class="w-full bg-green-50 border border-green-200 text-green-800 p-2 rounded-xl text-sm md:text-base font-bold hover:bg-green-100 transition flex justify-between items-center text-left">
+                                    <div class="flex items-center space-x-3 md:space-x-4">
+                                        <img src="img_1.jpg" alt="" class="w-12 h-12 md:w-14 md:h-14 object-cover rounded-lg border border-green-200 shadow-sm bg-white">
+                                        <span>Bài 1: Bài tập điền từ (Sở thích)</span>
+                                    </div>
+                                    <i class="fa-solid fa-play mr-2 text-green-700"></i>
+                                </button>
+                                <button id="btn-level-2" onclick="loadDefaultData(2)" class="w-full bg-blue-50 border border-blue-200 text-blue-800 p-2 rounded-xl text-sm md:text-base font-bold hover:bg-blue-100 transition flex justify-between items-center text-left">
+                                    <div class="flex items-center space-x-3 md:space-x-4">
+                                        <img src="img_2.jpg" alt="" class="w-12 h-12 md:w-14 md:h-14 object-cover rounded-lg border border-blue-200 shadow-sm bg-white">
+                                        <span>Bài 2: Bài nghe chép (Thời tiết)</span>
+                                    </div>
+                                    <i class="fa-solid fa-play mr-2 text-blue-700"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 border-t pt-2">
+                            <button onclick="toggleLevel('content-trung-cap')" class="w-full flex justify-between items-center py-2 text-gray-500 font-bold text-sm italic hover:bg-gray-50 rounded px-2 transition">
+                                <span>TRÌNH ĐỘ TRUNG CẤP</span>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
                             </button>
+                            <div id="content-trung-cap" class="level-content mt-2">
+                                <p class="text-xs text-gray-400 ml-6 py-2">(Các bài học sẽ được cập nhật tại đây)</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 border-t pt-2">
+                            <button onclick="toggleLevel('content-cao-cap')" class="w-full flex justify-between items-center py-2 text-gray-500 font-bold text-sm italic hover:bg-gray-50 rounded px-2 transition">
+                                <span>TRÌNH ĐỘ CAO CẤP</span>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </button>
+                            <div id="content-cao-cap" class="level-content mt-2">
+                                <p class="text-xs text-gray-400 ml-6 py-2">(Các bài học sẽ được cập nhật tại đây)</p>
+                            </div>
                         </div>
                     </div>
 
                     <div id="panel-ai-control" class="hidden">
-                        <h3 class="font-bold text-lg mb-4 text-gray-900">1. Tải tài liệu của bạn</h3>
-                        
+                        <h3 class="font-bold text-lg mb-4 text-gray-900 border-b pb-2">Tạo bài học AI</h3>
                         <div class="mb-4 space-y-3">
                             <div class="border border-gray-200 p-3 rounded-xl bg-gray-50">
                                 <label class="block text-xs font-bold text-gray-700 mb-2">Cách 1: Tải file từ máy</label>
@@ -295,7 +337,6 @@
                                 </button>
                             </div>
                         </div>
-
                         <p id="ai-status" class="text-sm text-gray-500 mb-4 text-center font-medium"></p>
                     </div>
                 </div>
@@ -314,7 +355,7 @@
                         <button onclick="submitEval()" class="bg-gray-900 hover:bg-black text-white px-8 py-2.5 rounded-lg font-medium transition shadow-md">Chấm điểm bài làm</button>
                     </div>
 
-                    <div id="feedback-container" class="mt-8 hidden">
+                    <div id="feedback-container" class="mt-8 hidden animate-in fade-in duration-500">
                     </div>
 
                     <div id="translation-section" class="mt-6 hidden border-t pt-4">
@@ -382,7 +423,7 @@
 
     <script>
         let tabState = {
-            default: { transcript: "", translation: "", prefill: "", audioSrc: "" }, 
+            default: { transcript: "", translation: "", audioSrc: "", clozeData: [] }, 
             ai: { transcript: "", audioB64: "", statusHtml: "" },
             currentLevel: 1
         };
@@ -393,25 +434,58 @@
             box.classList.toggle('hidden');
         }
 
-        function renderInputArea(level, prefillData = "") {
+        function toggleLevel(id) {
+            const contents = document.querySelectorAll('.level-content');
+            const target = document.getElementById(id);
+            const isAlreadyActive = target.classList.contains('active');
+
+            contents.forEach(content => content.classList.remove('active'));
+
+            if (!isAlreadyActive) {
+                target.classList.add('active');
+            }
+        }
+
+        function renderInputArea(level, clozeData = []) {
             const container = document.getElementById('input-area-container');
-            if (level === 1 && prefillData) {
-                const prefixes = prefillData.split('\n');
-                let html = '<label class="block text-gray-700 text-sm font-bold mb-4">Gõ phần còn thiếu vào ô trống:</label>';
-                html += '<div class="space-y-4 bg-gray-50 p-6 border border-gray-200 rounded-xl text-lg leading-relaxed shadow-inner overflow-y-auto max-h-[500px]">';
+
+            const isAIDictationTab = document.getElementById('btn-tab-ai').classList.contains('bg-hanred-600');
+
+            if (isAIDictationTab) {
+                container.innerHTML = `
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Gõ toàn bộ nội dung bạn nghe được từ tài liệu vừa tải lên:</label>
+                    <textarea id="user-input-text" rows="10" 
+                        class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-hanred-500 resize-y text-base transition leading-relaxed" 
+                        placeholder="Hãy tập trung nghe và gõ lại tại đây..."></textarea>
+                `;
+                return; 
+            }
+
+            if (level === 1 && clozeData && clozeData.length > 0) {
+                let html = '<label class="block text-gray-700 text-sm font-bold mb-4 italic">Nghe và điền phần còn thiếu vào ô trống:</label>';
+                html += '<div class="space-y-6 bg-gray-50 p-6 border border-gray-200 rounded-xl text-lg leading-[2.5] shadow-inner overflow-y-auto max-h-[500px] text-gray-700">';
                 
-                prefixes.forEach((prefix) => {
-                    if (!prefix.trim()) return;
-                    const isFull = /[.!?]$/.test(prefix.trim());
-                    if (isFull) {
-                        html += `<div class="row-sentence is-full flex items-baseline"><span class="prefix-text font-medium text-gray-700">${prefix}</span></div>`;
-                    } else {
-                        html += `
-                        <div class="row-sentence is-partial flex items-baseline flex-wrap gap-2">
-                            <span class="prefix-text font-medium text-gray-700 shrink-0">${prefix}</span>
-                            <input type="text" class="cloze-input flex-1 min-w-[200px] border-b-2 border-dashed border-gray-400 bg-transparent focus:border-hanred-600 focus:border-solid outline-none px-2 py-0 text-hanred-600 font-semibold transition" placeholder="..." />
-                        </div>`;
-                    }
+                let globalBlankIndex = 1; 
+                clozeData.forEach((sentence, sIdx) => {
+                    html += `<div class="sentence-row flex flex-wrap items-baseline gap-x-2 gap-y-1 pb-4 border-b border-gray-100 last:border-0">`;
+                    sentence.forEach((item, wIdx) => {
+                        if (item.is_blank) {
+                            const width = Math.max(60, item.word.length * 20); 
+                            html += `
+                            <div class="relative inline-block mx-1">
+                                <span class="absolute -top-4 left-0 text-[10px] font-bold text-gray-400">${globalBlankIndex}</span>
+                                <input type="text" 
+                                    data-s="${sIdx}" data-w="${wIdx}"
+                                    style="width: ${width}px"
+                                    class="cloze-input" 
+                                    placeholder="..." />
+                            </div>`;
+                            globalBlankIndex++; 
+                        } else {
+                            html += `<span>${item.word}</span>`;
+                        }
+                    });
+                    html += `</div>`;
                 });
                 html += '</div>';
                 container.innerHTML = html;
@@ -426,8 +500,11 @@
         function switchView(viewId) {
             const views = ['view-landing', 'view-dictation', 'view-speaking'];
             views.forEach(id => {
-                document.getElementById(id).classList.toggle('hidden', id !== viewId);
-                document.getElementById(id).classList.toggle('block', id === viewId);
+                const el = document.getElementById(id);
+                if(el) {
+                    el.classList.toggle('hidden', id !== viewId);
+                    el.classList.toggle('block', id === viewId);
+                }
             });
             const navMenu = document.getElementById('main-nav');
             if (viewId === 'view-landing') {
@@ -449,9 +526,7 @@
             document.getElementById('btn-tab-ai').className = !isDefault ? "px-6 py-2 bg-hanred-600 text-white font-bold rounded-lg shadow transition" : "px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border border-gray-200 hover:bg-gray-50 transition";
             
             document.getElementById('panel-default-control').classList.toggle('hidden', !isDefault);
-            document.getElementById('panel-default-control').classList.toggle('block', isDefault);
             document.getElementById('panel-ai-control').classList.toggle('hidden', isDefault);
-            document.getElementById('panel-ai-control').classList.toggle('block', !isDefault);
 
             document.getElementById('feedback-container').classList.add('hidden');
             document.getElementById('translation-section').classList.add('hidden');
@@ -471,7 +546,7 @@
                 if (tabState.default.transcript === "") {
                     loadDefaultData(1);
                 } else {
-                    renderInputArea(tabState.currentLevel, tabState.default.prefill);
+                    renderInputArea(tabState.currentLevel, tabState.default.clozeData);
                 }
             } else {
                 tabState.currentLevel = 2;
@@ -481,7 +556,7 @@
                 if (tabState.ai.audioB64) {
                     setAudioPlayer(tabState.ai.audioB64);
                 } else {
-                    document.getElementById('audio-container').innerHTML = "<p class='text-gray-500 text-sm'>Hãy cung cấp tài liệu để AI phân tích.</p>";
+                    document.getElementById('audio-container').innerHTML = "<p class='text-gray-500 text-sm text-center'>Hãy cung cấp tài liệu để AI phân tích.</p>";
                 }
             }
         }
@@ -502,15 +577,15 @@
                 
                 tabState.default.transcript = data.transcript;
                 tabState.default.translation = data.translation;
-                tabState.default.prefill = data.prefill;
                 tabState.default.audioSrc = data.audio_src;
+                tabState.default.clozeData = data.cloze_data;
                 tabState.currentLevel = level;
 
                 if (document.getElementById('panel-default-control').classList.contains('block')) {
                     currentTargetTranscript = tabState.default.transcript;
                     document.getElementById('audio-container').innerHTML = `<audio controls style="width: 100%; border-radius: 8px; outline: none;" src="${data.audio_src}"></audio>`;
                     
-                    renderInputArea(level, data.prefill);
+                    renderInputArea(level, data.cloze_data);
 
                     if (data.translation) {
                         document.getElementById('translation-box').innerText = data.translation;
@@ -539,9 +614,9 @@
             const btn = document.getElementById('btn-process-ai');
             const statusLabel = document.getElementById('ai-status');
             
-            btn.innerText = "Đang xử lý (Vui lòng đợi)...";
+            btn.innerText = "Đang xử lý...";
             btn.disabled = true;
-            statusLabel.innerText = "AI đang nghe và tạo script...";
+            statusLabel.innerText = "AI đang bóc tách kịch bản...";
 
             try {
                 const res = await fetch('/api/process-ai', {
@@ -559,10 +634,13 @@
                 if (tabState.ai.audioB64) {
                     setAudioPlayer(tabState.ai.audioB64);
                 }
+
+                renderInputArea(2); 
+
             } catch (err) {
                 statusLabel.innerHTML = `<span class="text-red-600">Lỗi trong quá trình xử lý!</span>`;
             } finally {
-                btn.innerText = "Phân tích Script qua AI";
+                btn.innerText = "Phân tích File";
                 btn.disabled = false;
             }
         }
@@ -577,9 +655,9 @@
             const btn = document.getElementById('btn-process-yt');
             const statusLabel = document.getElementById('ai-status');
             
-            btn.innerText = "Đang tải & xử lý (Có thể mất vài phút)...";
+            btn.innerText = "Đang xử lý...";
             btn.disabled = true;
-            statusLabel.innerHTML = "<span class='text-blue-600'>Hệ thống đang tải audio và phân tích. Vui lòng chờ...</span>";
+            statusLabel.innerHTML = "Đang tải audio từ YouTube...";
 
             try {
                 const res = await fetch('/api/process-youtube', {
@@ -604,99 +682,110 @@
                     setAudioPlayer(tabState.ai.audioB64);
                 }
                 
-                tabState.currentLevel = 2;
                 renderInputArea(2);
                 
             } catch (err) {
                 statusLabel.innerHTML = `<span class="text-red-600">Lỗi kết nối Server!</span>`;
             } finally {
-                btn.innerHTML = `<i class="fa-brands fa-youtube mr-2 text-lg"></i> Phân tích YouTube`;
+                btn.innerText = "Phân tích YouTube";
                 btn.disabled = false;
             }
         }
-
         async function submitEval() {
-            let userText = "";
-            const ta = document.getElementById('user-input-text');
+            // Kiểm tra chính xác xem đang ở tab nào dựa vào việc panel AI có bị ẩn hay không
+            const isAIDictation = !document.getElementById('panel-ai-control').classList.contains('hidden');
+            const isClozeMode = (!isAIDictation && tabState.currentLevel === 1);
             
-            if (ta) {
-                userText = ta.value.trim();
-            } else {
-                const container = document.getElementById('input-area-container');
-                const rows = container.querySelectorAll('.row-sentence');
-                const lines = [];
-                let hasInput = false;
-                
-                rows.forEach(row => {
-                    if (row.classList.contains('is-full')) {
-                        lines.push(row.querySelector('.prefix-text').innerText.trim());
-                    } else {
-                        const prefix = row.querySelector('.prefix-text').innerText.trim();
-                        const inputVal = row.querySelector('.cloze-input').value.trim();
-                        if (inputVal) hasInput = true;
-                        lines.push(prefix + " " + inputVal);
-                    }
-                });
-                
-                if (!hasInput && rows.length > 0) {
-                    alert("Vui lòng điền vào ít nhất một chỗ trống trước khi chấm!");
-                    return;
-                }
-                userText = lines.join(" ");
-            }
+            if (isClozeMode) {
+                // CHẾ ĐỘ ĐIỀN TỪ: Chỉ lấy dữ liệu từ các ô input
+                const inputs = document.querySelectorAll('.cloze-input');
+                let clozeAnswers = [];
+                inputs.forEach(input => clozeAnswers.push(input.value.trim()));
 
-            if (!currentTargetTranscript) {
-                alert("Chưa có dữ liệu bài tập (Script gốc) để chấm!");
-                return;
-            }
-            if (!userText) {
-                alert("Vui lòng nhập nội dung trước khi chấm!");
-                return;
-            }
-
-            try {
-                const res = await fetch('/api/evaluate', {
+                const res = await fetch('/api/evaluate-cloze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        target_text: currentTargetTranscript,
-                        user_text: userText
+                        cloze_answers: clozeAnswers,
+                        level: tabState.currentLevel
                     })
                 });
                 const result = await res.json();
                 
-                if (result.error) {
-                    alert(result.error);
-                    return;
-                }
+                renderClozeFeedback(result); 
+
+            } else {
+                // CHẾ ĐỘ CHÉP 100%: Cho Bài 2 và AI Dictation
+                let userText = document.getElementById('user-input-text').value.trim();
+                if (!userText) { alert("Vui lòng nhập nội dung!"); return; }
+
+                // Lấy đúng kịch bản tùy theo tab đang mở
+                const target = isAIDictation ? tabState.ai.transcript : tabState.default.transcript;
+
+                const res = await fetch('/api/evaluate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target_text: target, user_text: userText })
+                });
+                const result = await res.json();
                 
-                renderFeedback(result);
-            } catch (err) {
-                console.error("Lỗi chấm điểm:", err);
+                renderFeedback(result); 
             }
+        }
+
+        function renderClozeFeedback(data) {
+            const container = document.getElementById('feedback-container');
+            container.classList.remove('hidden');
+            
+            let html = `<h3 class="mb-6 text-2xl font-bold">Kết quả điền từ: <span class="text-hanred-600">${data.score_percent}%</span></h3>`;
+            html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">`;
+            
+            data.feedback.forEach((item, index) => {
+                if (item.status === "correct") {
+                    html += `
+                    <div class="flex items-center p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 shadow-sm">
+                        <span class="w-8 h-8 flex items-center justify-center bg-green-500 text-white rounded-full text-xs mr-3 font-bold">${index + 1}</span>
+                        <span class="font-bold">${item.word}</span>
+                        <i class="fa-solid fa-check ml-auto"></i>
+                    </div>`;
+                } else {
+                    html += `
+                    <div class="flex items-center p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 shadow-sm">
+                        <span class="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full text-xs mr-3 font-bold">${index + 1}</span>
+                        <span class="line-through opacity-50 mr-2">${item.word || "Trống"}</span>
+                        <i class="fa-solid fa-arrow-right-long mr-2 text-[10px]"></i>
+                        <span class="font-bold">${item.correct}</span>
+                    </div>`;
+                }
+            });
+            
+            html += `</div>`;
+            container.innerHTML = html;
+            container.scrollIntoView({ behavior: 'smooth' });
         }
 
         function renderFeedback(data) {
             const container = document.getElementById('feedback-container');
             container.classList.remove('hidden');
             
-            let html = `<h3 class="mb-4 text-xl font-bold">Điểm: <span class="text-hanred-600">${data.score_percent}%</span></h3>`;
-            html += `<div style="font-size:20px; line-height:2.2; background:#f9fafb; padding:20px; border-radius:8px; border:1px solid #ddd;">`;
+            let html = `<h3 class="mb-4 text-xl font-bold italic">Kết quả bài làm: <span class="text-hanred-600 underline">${data.score_percent}%</span></h3>`;
+            html += `<div style="font-size:18px; line-height:2.4; background:#f9fafb; padding:24px; border-radius:12px; border:1px solid #e2e8f0; font-weight:500;">`;
             
             data.feedback.forEach(item => {
                 if (item.status === "correct") {
-                    html += `<span style="color: #10b981; font-weight: 500; margin-right: 8px;">${item.word}</span>`;
+                    html += `<span style="color: #10b981; margin-right: 8px;">${item.word}</span>`;
                 } else if (item.status === "wrong_user") {
-                    html += `<span style="color: #ef4444; font-weight: 500; text-decoration: line-through; margin-right: 4px;">${item.word}</span>`;
+                    html += `<span style="color: #ef4444; text-decoration: line-through; margin-right: 4px;">${item.word}</span>`;
                 } else if (item.status === "missing") {
-                    html += `<span style="color: #ef4444; font-weight: 500; margin-right: 8px;">${item.word}</span>`;
+                    html += `<span style="color: #ef4444; border-bottom: 2px solid #ef4444; margin-right: 8px;">${item.word}</span>`;
                 } else if (item.status === "hint") {
-                    html += `<span style="color: #facc15; font-weight: 600; margin-right: 8px;">${item.word}</span>`;
+                    html += `<span style="color: #facc15; font-weight: 700; margin-right: 8px;">${item.word}</span>`;
                 }
             });
             
             html += `</div>`;
             container.innerHTML = html;
+            container.scrollIntoView({ behavior: 'smooth' });
         }
 
         function setAudioPlayer(b64) {

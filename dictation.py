@@ -3,11 +3,12 @@ import re
 
 def evaluate_dictation(original_text, user_input):
     def clean_word(word):
-        # Loại bỏ dấu câu để so sánh chính xác hơn
-        return re.sub(r'[.,!?~]+', '', word)
+        word = word.lower() 
+        return re.sub(r'[.,!?~"\'\(\)\[\]\{\}\-\s]+', '', word).strip()
 
-    orig_words = original_text.split()
-    user_words = user_input.split()
+    orig_words = [w for w in original_text.split() if w.strip()]
+    user_words = [w for w in user_input.split() if w.strip()]
+    
     orig_clean = [clean_word(w) for w in orig_words]
     user_clean = [clean_word(w) for w in user_words]
 
